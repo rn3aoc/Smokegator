@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Smokegator 0.4 beta</string>
+
+    <!-- Main menu -->
+    <string name="action_settings">Settings</string>
+    <string name="action_help">Help</string>
+
+    <string name="google_maps_key">AIzaSyDFhWSLNrtFdYiOOL65SWy31ILfjSKRKQA</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_permission_map">Разрешения не найдены</string>
+    <string name="title_location_permission">Разрешение</string>
+    <string name="text_location_permission">Разрешить доступ к локации</string>
+    <string name="ok">ОК</string>
+    <string name="add">Добавить</string>
+    <string name="az">Азимут</string>
+    <string name="lat">Широта</string>
+    <string name="lon">Долгота</string>
+    <string name="input_peleng">Ввод пеленга</string>
+    <string name="send">Отправить</string>
+    <string name="m_bearing">Магнитный азимут</string>
+
+    <string name="compass_image_description">Image of a compass rose, that rotates based on your
+        orientation</string>
+    <string name="title_activity_settings">Settings</string>
+
+
+
+
+    <!-- Preference Titles -->
+    <string name="user_login">Пользователь</string>
+    <string name="map_header">Карта</string>
+    <string name="sync_header">Синхронизация</string>
+
+    <!-- Preference Login -->
+    <string name="user_isregistered_title">Зарегистрирован</string>
+    <string name="user_isregistered_on">Необходим пароль</string>
+    <string name="user_isregistered_off">Анонимный доступ, только просмотр</string>
+
+    <string name="user_email">E-mail</string>
+
+    <string name="user_password">Пароль</string>
+
+    <string name="user_callsign">Позывной</string>
+
+    <!-- Preferences Map -->
+    <string name="bearing_correction_title">Азимут</string>
+    <string name="bearing_correction_off">Магнитный азимут</string>
+    <string name="bearing_correction_on">Истинный азимут</string>
+
+    <string name="map_maptype_default">MAP_TYPE_NORMAL</string>
+    <string name="maptype_title">Тип карты</string>
+    <string name="peleng_length">Длина пеленга, 0 - 30 км</string>
+
+    <!-- Sync Preferences -->
+    <string name="tracker_title">Трекер</string>
+    <string name="tracker_summary_off">Трекер выключен</string>
+    <string name="tracker_summary_on">Трекер включен</string>
+
+</resources>

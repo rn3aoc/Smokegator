@@ -1,0 +1,77 @@
+<!--
+  ~ Copyright 2018 The app Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/user_login">
+        <SwitchPreferenceCompat
+            app:key="isregistered"
+            app:summaryOff="@string/user_isregistered_off"
+            app:summaryOn="@string/user_isregistered_on"
+            app:title="@string/user_isregistered_title" />
+        <EditTextPreference
+            app:dependency="isregistered"
+            app:key="email"
+            app:title="@string/user_email"
+            app:useSimpleSummaryProvider="true"
+            />
+        <EditTextPreference
+            app:dependency="isregistered"
+            app:key="password"
+            app:title="@string/user_password"
+            app:useSimpleSummaryProvider="true"
+            />
+        <EditTextPreference
+            app:dependency="isregistered"
+            app:key="callsign"
+            app:title="@string/user_callsign"
+            app:useSimpleSummaryProvider="true"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/map_header">
+
+        <SwitchPreferenceCompat
+            app:key="bearing_correction"
+            app:summaryOff="@string/bearing_correction_off"
+            app:summaryOn="@string/bearing_correction_on"
+            app:title="@string/bearing_correction_title" />
+
+        <ListPreference
+            app:entries="@array/map_maptype_entries"
+            app:entryValues="@array/map_maptype_values"
+            app:key="maptype"
+            app:title="@string/maptype_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            app:key="pelenglength"
+            app:title="@string/peleng_length"
+            app:defaultValue="20"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/sync_header">
+
+        <SwitchPreferenceCompat
+            app:key="tracker"
+            app:summaryOff="@string/tracker_summary_off"
+            app:summaryOn="@string/tracker_summary_on"
+            app:title="@string/tracker_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
