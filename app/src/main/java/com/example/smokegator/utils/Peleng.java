@@ -24,8 +24,10 @@ public class Peleng {
     //private Context mContext; //для поддержки контекста
     private static final String TAG = "Peleng";
     Context applicationContext = MainActivity.getContextOfApplication();
-    public LatLng mLatLng;
-    public float mBearing;
+    //public LatLng mLatLng;
+    //public float mBearing;
+    public PelengData mPelengdata;
+
     public float mAlpha = 0.5f;
     //public Timestamp mTimestamp;
     private Object mMarker;
@@ -35,9 +37,10 @@ public class Peleng {
 
    // public Peleng(Context context) {
     public Peleng(LatLng latLng, float bearing) {
+        mPelengdata = new PelengData();
        // this.mContext = mContext;
-        mLatLng = latLng;
-        mBearing = bearing;
+        mPelengdata.latLng = latLng;
+        mPelengdata.t_bearing = bearing;
     //    this.context=context;
     //      LatLng mLatLng;
     //      float mBearing;
@@ -49,11 +52,11 @@ public class Peleng {
     public void show(GoogleMap map){
 
         mMarker = map.addMarker(new MarkerOptions()
-            .position(mLatLng)
+            .position(mPelengdata.latLng)
             //.anchor(0.5f,606.0f/612.0f)
             .anchor(0.5f,35f/42.0f)
             .flat(true)
-            .rotation(mBearing)
+            .rotation(mPelengdata.t_bearing)
             .icon(BitmapDescriptorFactory.fromResource(R.drawable.peleng_darkred_30px))
             .alpha(mAlpha));
             //.title(Integer.toString(mSharedPreferences.getInt("pelenglength",10)))
@@ -63,7 +66,7 @@ public class Peleng {
             .clickable(true)
                 .width(2)
             .add(
-                    mLatLng,
+                    mPelengdata.latLng,
                     pelengToLatLng()
             ));
     }
@@ -76,7 +79,7 @@ public class Peleng {
     private LatLng pelengToLatLng(){
         double distance = mSharedPreferences.getInt("pelenglength", 15)*300; // 0-30 km
        // double distance = 10; // хардкод длины пеленга
-        LatLng endPoint = computeOffset(mLatLng, distance, mBearing);
+        LatLng endPoint = computeOffset(mPelengdata.latLng, distance, mPelengdata.t_bearing);
         return endPoint; // for testing only
     }
 

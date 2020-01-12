@@ -1,6 +1,9 @@
 package com.example.smokegator;
 
+import android.content.ContentResolver;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -77,16 +80,19 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
         map.getUiSettings().setCompassEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.723641, 37.770276), 12));
 
-        Peleng Peleng1 = new Peleng(new LatLng(56.723642, 37.770276), 70.5f);
-        Peleng1.show(map);
-        Peleng Peleng2 = new Peleng(new LatLng(56.723642, 37.770276), 132f);
-        Peleng2.show(map);
-        Peleng Peleng3 = new Peleng(new LatLng(56.723642, 37.770276), 292f); //помойка в Кунилово
-        Peleng3.show(map);
-        Peleng Peleng4 = new Peleng(new LatLng(56.649173, 37.722923), 55f);
-        Peleng4.show(map);
-        Peleng Peleng5 = new Peleng(new LatLng(56.787875, 37.821680), 163f);
-        Peleng5.show(map);
+        ContentResolver resolver = getContext().getContentResolver();
+        Uri uri = Uri.parse("content://com.example.smokegator.provider/pelengs");
+        String[] projection = {"_ID", "lat", "lng", "t_bearing"};
+        Cursor cursor = resolver.query(uri, projection, null, null, null);
+
+        while (cursor.moveToNext()) {
+            double lat = cursor.getDouble(1);
+            double lng = cursor.getFloat(2);
+            float t_bearing = cursor.getFloat(3);
+
+            Peleng peleng = new Peleng(new LatLng(lat, lng), t_bearing);
+            peleng.show(map);
+        }
     }
 
 

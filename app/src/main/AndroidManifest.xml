@@ -13,8 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name=".utils.PelengProvider"
+            android:authorities="com.example.smokegator.provider"
+            android:enabled="true"
+            android:exported="true"></provider>
+
         <activity
-            android:name="com.example.smokegator.SettingsActivity"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -26,8 +32,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" /> <!-- <uses-library android:name="com.google.android.maps" /> -->
         <activity
-            android:name="com.example.smokegator.GetPelengActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:name=".GetPelengActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
