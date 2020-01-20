@@ -72,7 +72,6 @@ public class Peleng {
     }
 
     public void setAlpha() {
-
     }
 
 

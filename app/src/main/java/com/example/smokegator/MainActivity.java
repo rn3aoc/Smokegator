@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +103,21 @@ public class MainActivity extends AppCompatActivity {
            //     mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             }
         });
+
+
+
+        FloatingActionButton fab_peleng_list = findViewById(R.id.fab_peleng_list);
+        fab_peleng_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), PelengListActivity.class);
+                startActivity(intent);
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                //     mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            }
+        });
+
 
             contextOfApplication = getApplicationContext();
 

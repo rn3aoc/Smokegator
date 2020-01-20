@@ -13,11 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".PelengListActivity">
+
+        </activity>
+
         <provider
             android:name=".utils.PelengProvider"
             android:authorities="com.example.smokegator.provider"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
 
         <activity
             android:name=".SettingsActivity"

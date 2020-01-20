@@ -82,13 +82,13 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
 
         ContentResolver resolver = getContext().getContentResolver();
         Uri uri = Uri.parse("content://com.example.smokegator.provider/pelengs");
-        String[] projection = {"_ID", "lat", "lng", "t_bearing"};
+        String[] projection = {"_ID", "timestamp", "callsign", "lat", "lng", "t_bearing", "approved", "comment"};
         Cursor cursor = resolver.query(uri, projection, null, null, null);
 
         while (cursor.moveToNext()) {
-            double lat = cursor.getDouble(1);
-            double lng = cursor.getFloat(2);
-            float t_bearing = cursor.getFloat(3);
+            double lat = cursor.getDouble(2);
+            double lng = cursor.getDouble(3);
+            float t_bearing = cursor.getFloat(4);
 
             Peleng peleng = new Peleng(new LatLng(lat, lng), t_bearing);
             peleng.show(map);

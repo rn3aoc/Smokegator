@@ -9,10 +9,11 @@ import android.net.Uri;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PelengProvider extends ContentProvider {
     private ArrayList<PelengData> mPelengs;
-    static private String[] PELENG_FIELDS = {"_ID", "lat", "lng", "t_bearing"};
+    static private String[] PELENG_FIELDS = {"timestamp", "callsign", "lat", "lng", "t_bearing","approved", "comment"};
 
 
 
@@ -20,24 +21,44 @@ public class PelengProvider extends ContentProvider {
         mPelengs = new ArrayList<>();
         /* Набивка тестовыми данными */
         mPelengs.add(new PelengData() {{
+            timestamp = new Date();
+            callsign = "Kreg";
             latLng = new LatLng(56.723642, 37.770276);
             t_bearing = 70.5f;
+            approved = false;
+            comment = "Белый дым, из одной точки";
         }});
         mPelengs.add(new PelengData() {{
+            timestamp = new Date();
+            callsign = "Kreg";
             latLng = new LatLng(56.723642, 37.770276);
             t_bearing = 132f;
+            approved = false;
+            comment = "Белый дым, из одной точки";
         }});
         mPelengs.add(new PelengData() {{ //помойка в Кунилово
+            timestamp = new Date();
+            callsign = "Kreg";
             latLng = new LatLng(56.723642, 37.770276);
             t_bearing = 292f;
+            approved = false;
+            comment = "Белый дым, из одной точки";
         }});
         mPelengs.add(new PelengData() {{
+            timestamp = new Date();
+            callsign = "Нерпа";
             latLng = new LatLng(56.649173, 37.722923);
             t_bearing = 55f;
+            approved = false;
+            comment = "Белый дым, из одной точки";
         }});
         mPelengs.add(new PelengData() {{
+            timestamp = new Date();
+            callsign = "Нерпа";
             latLng = new LatLng(56.787875, 37.821680);
             t_bearing = 163f;
+            approved = false;
+            comment = "Белый дым, из одной точки";
         }});
 
     }
@@ -77,9 +98,13 @@ public class PelengProvider extends ContentProvider {
         for (PelengData data : mPelengs) {
             MatrixCursor.RowBuilder row = cursor.newRow();
             row.add("_ID", lastId++);
+            row.add("timestamp", data.timestamp);
+            row.add("callsign", data.callsign);
             row.add("lat", data.latLng.latitude);
             row.add("lng", data.latLng.longitude);
             row.add("t_bearing", data.t_bearing);
+            row.add("approved", data.approved);
+            row.add("comment", data.comment);
         }
 
         return cursor;

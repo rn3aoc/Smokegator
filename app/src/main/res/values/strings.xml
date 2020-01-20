@@ -26,8 +26,6 @@
     <string name="title_activity_settings">Settings</string>
 
 
-
-
     <!-- Preference Titles -->
     <string name="user_login">Пользователь</string>
     <string name="map_header">Карта</string>
@@ -57,5 +55,8 @@
     <string name="tracker_title">Трекер</string>
     <string name="tracker_summary_off">Трекер выключен</string>
     <string name="tracker_summary_on">Трекер включен</string>
+
+    <string name="title_peleng_list">Pelengs</string>
+    <string name="title_peleng_detail">Peleng Detail</string>
 
 </resources>
