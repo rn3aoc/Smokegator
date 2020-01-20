@@ -5,34 +5,47 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smokegator.adapter.PelengListAdapter;
+import com.example.smokegator.viewmodel.PelengListViewModel;
 
 import java.util.ArrayList;
 
 public class PelengListActivity extends AppCompatActivity implements PelengListAdapter.ItemClickListener {
 
     PelengListAdapter adapter;
+    PelengListViewModel pelengListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peleng_list);
 
+        // get viewmodel
+        pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
+
         // data to populate the RecyclerView with
-        ArrayList<String> Pelengs = new ArrayList<>();
+        pelengListViewModel.getmPelengs().add("Horse");
+        pelengListViewModel.getmPelengs().add("Camel");
+        pelengListViewModel.getmPelengs().add("Deer");
+        pelengListViewModel.getmPelengs().add("Lama");
+        pelengListViewModel.getmPelengs().add("Cow");
+
+       /* ArrayList<String> Pelengs = new ArrayList<>();
         Pelengs.add("Horse");
         Pelengs.add("Cow");
         Pelengs.add("Camel");
         Pelengs.add("Sheep");
         Pelengs.add("Goat");
+        */
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvPelengs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PelengListAdapter(this, Pelengs);
+        adapter = new PelengListAdapter(this, pelengListViewModel.getmPelengs());
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }

@@ -13,8 +13,14 @@ import java.util.Date;
 import java.util.List;
 
 public class PelengListViewModel extends ViewModel {
+    private List<String> mPelengs = new ArrayList<>();
 
-    private List<PelengEntity> mPelengs = new ArrayList<>();
+    public List<String> getmPelengs(){
+        return mPelengs;
+    }
+
+
+    //private List<PelengEntity> mPelengs = new ArrayList<>();
    /* private MutableLiveData<List<PelengEntity>> mPelengs;
     public LiveData<List<PelengEntity>> getPelengs() {
         if (mPelengs == null){
@@ -24,9 +30,9 @@ public class PelengListViewModel extends ViewModel {
     }
    */
 
-    public void addTestPeleng(PelengEntity testPelengEntity){
+   /* public void addTestPeleng(PelengEntity testPelengEntity){
         mPelengs.add(testPelengEntity);
         };
-
+    */
 
     }
