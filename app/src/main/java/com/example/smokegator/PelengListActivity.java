@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smokegator.adapter.PelengListAdapter;
+import com.example.smokegator.data.PelengEntity;
 import com.example.smokegator.viewmodel.PelengListViewModel;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-
+import java.util.Date;
+import java.security.Timestamp;
 public class PelengListActivity extends AppCompatActivity implements PelengListAdapter.ItemClickListener {
 
     PelengListAdapter adapter;
@@ -28,11 +31,34 @@ public class PelengListActivity extends AppCompatActivity implements PelengListA
         pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
 
         // data to populate the RecyclerView with
-        pelengListViewModel.getmPelengs().add("Horse");
-        pelengListViewModel.getmPelengs().add("Camel");
+        pelengListViewModel.getmPelengs().add(new PelengEntity(new LatLng(56.723642, 37.770276),
+                70.5f,
+                new Date(),
+                "Kreg"));
+        pelengListViewModel.getmPelengs().add(new PelengEntity(new LatLng(56.723642, 37.770276),
+                70.5f,
+                new Date(),
+                "Kreg"));
+        pelengListViewModel.getmPelengs().add(new PelengEntity(new LatLng(56.723642, 37.770276),
+                70.5f,
+                new Date(),
+                "Kreg"));
+        pelengListViewModel.getmPelengs().add(new PelengEntity(new LatLng(56.723642, 37.770276),
+                70.5f,
+                new Date(),
+                "Kreg"));
+        pelengListViewModel.getmPelengs().add(new PelengEntity(new LatLng(56.723642, 37.770276),
+                70.5f,
+                new Date(),
+                "Kreg"));
+        pelengListViewModel.getmPelengs().add(new PelengEntity(new LatLng(56.723642, 37.770276),
+                70.5f,
+                new Date(),
+                "Kreg"));
+       /* pelengListViewModel.getmPelengs().add("Camel");
         pelengListViewModel.getmPelengs().add("Deer");
         pelengListViewModel.getmPelengs().add("Lama");
-        pelengListViewModel.getmPelengs().add("Cow");
+        pelengListViewModel.getmPelengs().add("Cow");*/
 
        /* ArrayList<String> Pelengs = new ArrayList<>();
         Pelengs.add("Horse");
@@ -50,15 +76,17 @@ public class PelengListActivity extends AppCompatActivity implements PelengListA
         recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
-    }
-
    /* @Override
     public void onItemClick(View view, int position) {
-
+        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }*/
+
+
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
 }
 
 

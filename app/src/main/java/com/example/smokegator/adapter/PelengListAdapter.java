@@ -1,6 +1,7 @@
 package com.example.smokegator.adapter;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,42 +11,57 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smokegator.R;
+import com.example.smokegator.data.PelengEntity;
 
 import java.util.List;
 
 public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.ViewHolder> {
-
-    private List<String> mData;
-    private LayoutInflater mInflater;
+    private List<PelengEntity> mPelengEntities;
+    //private List<String> mPelengEntities;
+    //private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context mContext;
+
+    // Turn PelengEntity into String
+    private String PelengEntityToString(PelengEntity pelengEntity){
+       String pelengString = String.valueOf(pelengEntity.getBearing()) + " " + pelengEntity.getCallsign() ;
+        return pelengString;
+    }
 
     // data is passed into the constructor
-    public PelengListAdapter(Context context, List<String> data) {
-        this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+    public PelengListAdapter(Context context, List<PelengEntity> tvPelengText) {
+        this.mContext = context;
+       // this.mInflater = LayoutInflater.from(context);
+        this.mPelengEntities = tvPelengText;
     }
 
     // inflates the row layout from xml when needed
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.pelenglist_row, parent, false);
-        return new ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pelenglist_row, parent, false);
+        //View view = mInflater.inflate(R.layout.pelenglist_row, parent, false);
+        ViewHolder holder = new ViewHolder(view);
+        return holder;
+       // return new ViewHolder(view);
     }
 
 
-    // binds the data to the TextView in each row
+    // binds the pelengEntities to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        String peleng = mData.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        viewHolder.myTextView.setText(PelengEntityToString(mPelengEntities.get(position)));
+       // viewHolder.pelengEntities.setText(mPelengEntities.get(position).getBearing());
+       // viewHolder.pelengEntities.setText(mPelengEntities.get(position).getCallsign());
+        //String peleng = mPelengEntities.get(position);
+        //viewHolder.myTextView.setText(peleng);
        // holder.myTextView.setText(peleng);
-        holder.myTextView.setText(peleng);
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mPelengEntities.size();
     }
 
 
@@ -65,10 +81,10 @@ public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.Vi
         }
     }
 
-    // convenience method for getting data at click position
-    public String getItem(int id) {
-        return mData.get(id);
-    }
+    // convenience method for getting pelengEntities at click position
+    /*public String getItem(int id) {
+        return mPelengEntities.get(id);
+    }*/
 
     // allows clicks events to be caught
     public void setClickListener(ItemClickListener itemClickListener) {

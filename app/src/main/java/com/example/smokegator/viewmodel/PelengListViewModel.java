@@ -13,9 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 public class PelengListViewModel extends ViewModel {
-    private List<String> mPelengs = new ArrayList<>();
 
-    public List<String> getmPelengs(){
+    private List<PelengEntity> mPelengs = new ArrayList<>();
+
+    public List<PelengEntity> getmPelengs(){
         return mPelengs;
     }
 

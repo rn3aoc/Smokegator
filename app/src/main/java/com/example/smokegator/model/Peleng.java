@@ -6,6 +6,7 @@ package com.example.smokegator.model;
 
 import com.google.android.gms.maps.model.LatLng;
 import java.security.Timestamp;
+import java.util.Date;
 
 public interface Peleng {
 
@@ -21,8 +22,8 @@ public interface Peleng {
     public float getBearing();
     public void setBearing(float bearing);
 
-    public Timestamp getTimestamp();
-    public void setTimestamp(Timestamp timestamp); //for testing purpose only
+    public Date getTimestamp();
+    public void setTimestamp(Date timestamp); //for testing purpose only
 
     public String getCallsign();
     public void setCallsign(String callsign);

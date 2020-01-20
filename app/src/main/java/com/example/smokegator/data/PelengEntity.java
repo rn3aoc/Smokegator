@@ -3,14 +3,24 @@ package com.example.smokegator.data;
 import com.example.smokegator.model.Peleng;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.security.Timestamp;
+//import java.security.Timestamp;
+import java.util.Date;
 
 public class PelengEntity implements Peleng {
 
     private LatLng latLng;
     private float bearing;
-    private Timestamp timestamp;
+    private Date timestamp;
     private String callsign;
+
+    public PelengEntity(LatLng latLng, float bearing, Date timestamp, String callsign ){
+
+        this.latLng = latLng;
+        this.bearing = bearing;
+        this.timestamp = timestamp;
+        this.callsign = callsign;
+
+    }
 
     @Override
     public LatLng getLatLng() {
@@ -33,12 +43,12 @@ public class PelengEntity implements Peleng {
     }
 
     @Override
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
     @Override
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 
