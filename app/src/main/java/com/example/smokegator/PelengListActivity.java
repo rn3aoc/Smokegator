@@ -1,5 +1,57 @@
 package com.example.smokegator;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.smokegator.adapter.PelengListAdapter;
+
+import java.util.ArrayList;
+
+public class PelengListActivity extends AppCompatActivity implements PelengListAdapter.ItemClickListener {
+
+    PelengListAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_peleng_list);
+
+        // data to populate the RecyclerView with
+        ArrayList<String> Pelengs = new ArrayList<>();
+        Pelengs.add("Horse");
+        Pelengs.add("Cow");
+        Pelengs.add("Camel");
+        Pelengs.add("Sheep");
+        Pelengs.add("Goat");
+
+        // set up the RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.rvPelengs);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new PelengListAdapter(this, Pelengs);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+    }
+
+   /* @Override
+    public void onItemClick(View view, int position) {
+
+    }*/
+}
+
+
+
+
+/*
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -30,3 +82,4 @@ public class PelengListActivity extends AppCompatActivity {
         pelengsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }
+*/
