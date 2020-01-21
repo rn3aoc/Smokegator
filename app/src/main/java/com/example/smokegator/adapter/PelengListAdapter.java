@@ -1,7 +1,6 @@
 package com.example.smokegator.adapter;
 
 import android.content.Context;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smokegator.R;
 import com.example.smokegator.data.PelengEntity;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import static android.os.Build.VERSION_CODES.M;
 
 public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.ViewHolder> {
     private List<PelengEntity> mPelengEntities;
@@ -22,10 +29,28 @@ public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.Vi
     private ItemClickListener mClickListener;
     private Context mContext;
 
+    // Turn Date to formatted String date
+    private String PelengEntityDateToString(Date timestamp){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ssz");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
+        return  simpleDateFormat.format(timestamp);
+    }
+
+    // Turn LatLng into String latitude and String longitude
+    private String PelengEntityLatLngToString(LatLng latLng){
+        return String.valueOf(latLng.latitude) + " " + String.valueOf(latLng.longitude);
+    }
+
     // Turn PelengEntity into String
     private String PelengEntityToString(PelengEntity pelengEntity){
-       String pelengString = String.valueOf(pelengEntity.getBearing()) + " " + pelengEntity.getCallsign() ;
-        return pelengString;
+       //String pelengString = String.valueOf(pelengEntity.getBearing()) + " " + pelengEntity.getCallsign() ;
+        return  PelengEntityLatLngToString(pelengEntity.getLatLng())
+                + " "
+                + pelengEntity.getBearing()
+                + " "
+                + pelengEntity.getCallsign()
+                + "\n"
+                + PelengEntityDateToString(pelengEntity.getTimestamp());
     }
 
     // data is passed into the constructor
