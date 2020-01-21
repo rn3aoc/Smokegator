@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.ARPelengator"></activity>
-        <activity android:name=".PelengListActivity"></activity>
 
         <provider
             android:name=".utils.PelengProvider"
@@ -25,6 +24,14 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.smokegator.MainActivity" />
+        </activity>
+        <activity
+            android:name=".PelengListActivity"
+            android:label="@string/title_activity_pelenglist"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

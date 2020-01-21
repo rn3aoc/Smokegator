@@ -58,5 +58,6 @@
 
     <string name="title_peleng_list">Pelengs</string>
     <string name="title_peleng_detail">Peleng Detail</string>
+    <string name="title_activity_pelenglist">Pelengs</string>
 
 </resources>
