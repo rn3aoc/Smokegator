@@ -45,9 +45,9 @@ public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.Vi
     private String PelengEntityToString(PelengEntity pelengEntity){
        //String pelengString = String.valueOf(pelengEntity.getBearing()) + " " + pelengEntity.getCallsign() ;
         return  PelengEntityLatLngToString(pelengEntity.getLatLng())
-                + " "
+                + " ("
                 + pelengEntity.getBearing()
-                + " "
+                + "°) "
                 + pelengEntity.getCallsign()
                 + "\n"
                 + PelengEntityDateToString(pelengEntity.getTimestamp());

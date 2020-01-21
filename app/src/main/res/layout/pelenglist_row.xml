@@ -11,12 +11,20 @@
     android:layout_height="wrap_content">
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="visible"
+        app:srcCompat="@android:drawable/ic_menu_compass" />
+
     <TextView
         android:id="@+id/tvPelengText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/cardview_compat_inset_shadow"
-        android:textSize="20sp" />
+        android:textSize="14sp" />
 <!--app:text = "@{PelengListView.Model.PelengText}"-->
 </LinearLayout>
 </layout>
