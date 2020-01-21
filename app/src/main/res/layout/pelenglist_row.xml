@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:visibility="visible"
-        app:srcCompat="@android:drawable/ic_menu_compass" />
+        app:srcCompat="@android:drawable/ic_menu_myplaces" />
 
     <TextView
         android:id="@+id/tvPelengText"
