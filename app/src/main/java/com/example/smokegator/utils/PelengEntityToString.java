@@ -25,10 +25,10 @@ public class PelengEntityToString {
     private static String LatLngToString(@NotNull LatLng latLng){
         String latitude;
         String longitude;
-        if(latLng.latitude < 0){ latitude = "S: " + latLng.latitude * (-1);
-        } else {latitude = "N: " + latLng.latitude;}
-        if(latLng.longitude < 0){longitude = "W: " + latLng.longitude * (-1);
-        } else {longitude = "E: " + latLng.longitude;}
+        if(latLng.latitude < 0){ latitude = latLng.latitude * (-1) + "S";
+        } else {latitude = latLng.latitude + "N" ;}
+        if(latLng.longitude < 0){longitude = latLng.longitude * (-1) + "W";
+        } else {longitude = latLng.longitude + "E";}
         return latitude + " " + longitude;
     }
 
