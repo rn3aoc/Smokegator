@@ -1,0 +1,45 @@
+package com.example.smokegator.utils;
+
+import com.example.smokegator.data.PelengEntity;
+import com.google.android.gms.maps.model.LatLng;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
+public class PelengEntityToString {
+
+    // Turns Date to formatted String date
+    private static String DateToString(Date timestamp){
+        SimpleDateFormat simpleDateFormat;
+        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ssz", Locale.US);
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
+        return  simpleDateFormat.format(timestamp);
+    }
+
+    // Turns LatLng into String latitude and String longitude
+    @org.jetbrains.annotations.NotNull
+    private static String LatLngToString(@NotNull LatLng latLng){
+        String latitude;
+        String longitude;
+        if(latLng.latitude < 0){ latitude = "S: " + latLng.latitude * (-1);
+        } else {latitude = "N: " + latLng.latitude;}
+        if(latLng.longitude < 0){longitude = "W: " + latLng.longitude * (-1);
+        } else {longitude = "E: " + latLng.longitude;}
+        return latitude + " " + longitude;
+    }
+
+    public static String EntityToString(PelengEntity pelengEntity){
+
+        return  LatLngToString(pelengEntity.getLatLng())
+                + " ("
+                + pelengEntity.getBearing()
+                + "°) "
+                + pelengEntity.getCallsign()
+                + "\n"
+                + DateToString(pelengEntity.getTimestamp());
+    }
+}
