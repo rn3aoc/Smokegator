@@ -42,7 +42,7 @@ public class PelengProvider extends ContentProvider {
             latLng = new LatLng(56.723642, 37.770276);
             t_bearing = 292f;
             approved = false;
-            comment = "Белый дым, из одной точки";
+            comment = "Вероятно, помойка в Кунилово";
         }});
         mPelengs.add(new PelengData() {{
             timestamp = new Date();
@@ -50,7 +50,7 @@ public class PelengProvider extends ContentProvider {
             latLng = new LatLng(56.649173, 37.722923);
             t_bearing = 55f;
             approved = false;
-            comment = "Белый дым, из одной точки";
+            comment = "";
         }});
         mPelengs.add(new PelengData() {{
             timestamp = new Date();
