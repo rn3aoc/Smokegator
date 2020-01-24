@@ -1,7 +1,9 @@
 package com.example.smokegator.viewmodel;
 
+import android.app.Application;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -17,7 +19,7 @@ import java.util.List;
 
 public class PelengListViewModel extends ViewModel {
 
-    //private List<PelengEntity> mPelengs = new ArrayList<>();
+    //private List<PelengEntity> Pelengs = new ArrayList<>();
 
    // public List<PelengEntity> getmPelengs(){
   //      return mPelengs;
@@ -27,6 +29,8 @@ public class PelengListViewModel extends ViewModel {
         private MutableLiveData<List<PelengEntity>> mPelengs; //Holds Data
         private PelengsRepo mRepo;
         private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>(); //Represent when a query is made
+        //private List<PelengEntity> Pelengs = new ArrayList<>();
+
 
         public void init(){
             if(mPelengs != null){
@@ -34,17 +38,17 @@ public class PelengListViewModel extends ViewModel {
             }
             mRepo = PelengsRepo.getInstance();
             mPelengs = mRepo.getPelengEntity();
-        }
+            }
 
         public void addNewValue(final PelengEntity pelengEntity){
             mIsUpdating.setValue(true);
 
-            new AsyncTask<Void, Void, Void>(){
+           new AsyncTask<Void, Void, Void>(){
                 @Override
                 protected void onPostExecute(Void aVoid) {
-                    List<PelengEntity> currentPlace = mPelengs.getValue();
-                    currentPlace.add(pelengEntity);
-                    mPelengs.postValue(currentPlace);
+                    List<PelengEntity> currentPeleng = mPelengs.getValue();
+                    currentPeleng.add(pelengEntity);
+                    mPelengs.postValue(currentPeleng);
                     mIsUpdating.setValue(false);
                 }
 
@@ -66,4 +70,4 @@ public class PelengListViewModel extends ViewModel {
             return mIsUpdating;
         }
 
-    }
+}

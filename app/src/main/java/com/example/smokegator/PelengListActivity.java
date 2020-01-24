@@ -47,7 +47,7 @@ public class PelengListActivity extends AppCompatActivity {
         //To observe changes done to the LiveData objects
         pelengListViewModel.getPelengEntity().observe(this, new Observer<List<PelengEntity>>() {
             @Override
-            public void onChanged(@Nullable List<PelengEntity> nicePlaces) {
+            public void onChanged(@Nullable List<PelengEntity> mPelengs) {
                 mAdapter.notifyDataSetChanged();
             }
         });

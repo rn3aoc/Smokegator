@@ -4,24 +4,35 @@ import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.smokegator.data.PelengEntity;
 import com.example.smokegator.utils.Peleng;
 import com.example.smokegator.R;
+import com.example.smokegator.viewmodel.PelengListViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
 import java.util.Objects;
 
 public class    MapFragment extends Fragment implements OnMapReadyCallback {
@@ -29,14 +40,16 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
     private MapView mapView;
     private GoogleMap map;
     private SharedPreferences sharedPreferences;
-
+    private PelengListViewModel pelengListViewModel;
+    private LiveData<List<PelengEntity>> pelengEntities;
+    private PelengEntity mPelengEntity;
+    private Marker mMarker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
 
            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext()/* Activity context */);
-
 
         // Gets the MapView from the XML layout and creates it
         mapView = (MapView) v.findViewById(R.id.mapView);
@@ -80,6 +93,43 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
         map.getUiSettings().setCompassEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.723641, 37.770276), 12));
 
+        pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
+        pelengListViewModel.init();
+        LiveData<List<PelengEntity>> pelengEntities = pelengListViewModel.getPelengEntity();
+
+       // pelengEntities.getValue().get()
+
+
+        for(int i = 0; i < pelengEntities.getValue().size(); i++) {
+            mMarker = map.addMarker(new MarkerOptions()
+                    .position(pelengEntities.getValue().get(i).getLatLng())
+                    .anchor(0.5f,35f/42.0f)
+                    .flat(true)
+                    .rotation(pelengEntities.getValue().get(i).getBearing())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.peleng_darkred_30px))
+                    .alpha(0.8f));
+        }
+
+        pelengEntities.observe(this, new Observer<List<PelengEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<PelengEntity> mPelengs) {
+               // mMarker.getPosition();
+
+                mPelengs.size();
+            }
+        });
+
+
+
+
+
+           // mMarker = map.addMarker(new MarkerOptions()
+          //          .position(mPelengEntity.getLatLng()));
+        //
+
+
+
+        /*
         ContentResolver resolver = getContext().getContentResolver();
         Uri uri = Uri.parse("content://com.example.smokegator.provider/pelengs");
         String[] projection = {"_ID", "timestamp", "callsign", "lat", "lng", "t_bearing", "approved", "comment"};
@@ -92,7 +142,7 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
 
             Peleng peleng = new Peleng(new LatLng(lat, lng), t_bearing);
             peleng.show(map);
-        }
+        } */
     }
 
 
