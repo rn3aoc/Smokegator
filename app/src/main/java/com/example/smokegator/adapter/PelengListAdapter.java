@@ -38,7 +38,8 @@ public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.Vi
     // total number of rows
     @Override
     public int getItemCount() {
-        return mPelengEntities.size();
+
+         return mPelengEntities.size();
     }
 
 

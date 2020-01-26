@@ -22,10 +22,11 @@ public class PelengsRepo {
     }
 
     //Mimic getting data from web source
-    public MutableLiveData<List<PelengEntity>> getPelengEntity(){
+   public MutableLiveData<List<PelengEntity>> getPelengEntity(){
         setPelengEntity();
 
         MutableLiveData<List<PelengEntity>> data = new MutableLiveData<>();
+      // MutableLiveData<List<PelengEntity>> data;
         data.setValue(dataSet);
         return data;
     }
@@ -33,10 +34,11 @@ public class PelengsRepo {
     //Mimic data retrieval from database
     private void setPelengEntity(){
         dataSet.add(
-                new PelengEntity(new LatLng(56.723642, 37.770276),
+                new PelengEntity(new LatLng(37.7510, 14.9934),
                         70.5f,
                         new Date(),
                         "Kreg"));
+        /*
         dataSet.add(
                 new PelengEntity(new LatLng(56.723642, 37.770276),
                         132f,
@@ -58,6 +60,10 @@ public class PelengsRepo {
                         new Date(),
                         "Kreg"));
 
+         */
+
 
     }
+
+
 }

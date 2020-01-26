@@ -1,10 +1,6 @@
 package com.example.smokegator;
 
-import android.content.ContentResolver;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -19,12 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.smokegator.data.PelengEntity;
-import com.example.smokegator.utils.Peleng;
-import com.example.smokegator.R;
 import com.example.smokegator.viewmodel.PelengListViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -33,7 +26,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
-import java.util.Objects;
 
 public class    MapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -41,9 +33,6 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap map;
     private SharedPreferences sharedPreferences;
     private PelengListViewModel pelengListViewModel;
-    private LiveData<List<PelengEntity>> pelengEntities;
-    private PelengEntity mPelengEntity;
-    private Marker mMarker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +49,10 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
 
 
         return v;
+        //PelengListViewModelFactory factory = new PelengListViewModelFactory(this.getApplication());
+       // pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
+       // pelengListViewModel.init();
+
     }
 
     @Override
@@ -68,12 +61,12 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
         // Updates the location and zoom of the MapView
         /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
         map.animateCamera(cameraUpdate);*/
-        if(((MainActivity)getActivity()).checkLocationPermission()) {
+        if (((MainActivity) getActivity()).checkLocationPermission()) {
             map.setMyLocationEnabled(true);
         }
 
 
-        switch (sharedPreferences.getString("maptype", "")){
+        switch (sharedPreferences.getString("maptype", "")) {
             case "1":
                 map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 break;
@@ -93,34 +86,33 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
         map.getUiSettings().setCompassEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.723641, 37.770276), 12));
 
+        /*PelengListViewModelFactory factory = new PelengListViewModelFactory(this)
+        */
         pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
         pelengListViewModel.init();
         LiveData<List<PelengEntity>> pelengEntities = pelengListViewModel.getPelengEntity();
 
-       // pelengEntities.getValue().get()
-
-
-        for(int i = 0; i < pelengEntities.getValue().size(); i++) {
-            mMarker = map.addMarker(new MarkerOptions()
-                    .position(pelengEntities.getValue().get(i).getLatLng())
-                    .anchor(0.5f,35f/42.0f)
-                    .flat(true)
-                    .rotation(pelengEntities.getValue().get(i).getBearing())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.peleng_darkred_30px))
-                    .alpha(0.8f));
-        }
 
         pelengEntities.observe(this, new Observer<List<PelengEntity>>() {
             @Override
             public void onChanged(@Nullable List<PelengEntity> mPelengs) {
-               // mMarker.getPosition();
 
-                mPelengs.size();
+                for (int i = 0; i < mPelengs.size(); i++) {
+                    Marker mMarker = map.addMarker(new MarkerOptions()
+                            .position(mPelengs.get(i).getLatLng())
+                            .anchor(0.5f, 35f / 42.0f)
+                            .flat(true)
+                            .rotation(mPelengs.get(i).getBearing())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.peleng_darkred_30px))
+                            .alpha(0.8f));
+                }
+
+
             }
         });
 
 
-
+    }
 
 
            // mMarker = map.addMarker(new MarkerOptions()
@@ -143,7 +135,7 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
             Peleng peleng = new Peleng(new LatLng(lat, lng), t_bearing);
             peleng.show(map);
         } */
-    }
+   // }
 
 
 
