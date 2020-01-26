@@ -11,13 +11,10 @@
     android:layout_height="wrap_content">
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:visibility="visible"
-        app:srcCompat="@android:drawable/ic_menu_myplaces" />
+    <com.example.smokegator.ui.CompassView
+        android:id="@+id/compass_view"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
 
     <TextView
         android:id="@+id/tvPelengText"
