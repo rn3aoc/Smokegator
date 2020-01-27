@@ -32,7 +32,6 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
     private MapView mapView;
     private GoogleMap map;
     private SharedPreferences sharedPreferences;
-    private PelengListViewModel pelengListViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,9 +48,6 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
 
 
         return v;
-        //PelengListViewModelFactory factory = new PelengListViewModelFactory(this.getApplication());
-       // pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
-       // pelengListViewModel.init();
 
     }
 
@@ -86,9 +82,7 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
         map.getUiSettings().setCompassEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.723641, 37.770276), 12));
 
-        /*PelengListViewModelFactory factory = new PelengListViewModelFactory(this)
-        */
-        pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
+        PelengListViewModel pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
         pelengListViewModel.init();
         LiveData<List<PelengEntity>> pelengEntities = pelengListViewModel.getPelengEntity();
 
@@ -113,62 +107,6 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
 
 
     }
-
-
-           // mMarker = map.addMarker(new MarkerOptions()
-          //          .position(mPelengEntity.getLatLng()));
-        //
-
-
-
-        /*
-        ContentResolver resolver = getContext().getContentResolver();
-        Uri uri = Uri.parse("content://com.example.smokegator.provider/pelengs");
-        String[] projection = {"_ID", "timestamp", "callsign", "lat", "lng", "t_bearing", "approved", "comment"};
-        Cursor cursor = resolver.query(uri, projection, null, null, null);
-
-        while (cursor.moveToNext()) {
-            double lat = cursor.getDouble(2);
-            double lng = cursor.getDouble(3);
-            float t_bearing = cursor.getFloat(4);
-
-            Peleng peleng = new Peleng(new LatLng(lat, lng), t_bearing);
-            peleng.show(map);
-        } */
-   // }
-
-
-
-    /*@Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // location-related task you need to do.
-                    map.getUiSettings().setMyLocationButtonEnabled(true);
-                    map.setMyLocationEnabled(true);
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    map.getUiSettings().setMyLocationButtonEnabled(false);
-                    map.setMyLocationEnabled(false);
-
-                }
-                return;
-            }
-
-        }
-    }
-
-    */
-
 
 
     @Override

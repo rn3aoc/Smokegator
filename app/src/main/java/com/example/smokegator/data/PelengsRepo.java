@@ -41,32 +41,7 @@ public class PelengsRepo {
                         70.5f,
                         new Date(),
                         "Kreg"));}
-        /*
-        dataSet.add(
-                new PelengEntity(new LatLng(56.723642, 37.770276),
-                        132f,
-                        new Date(),
-                        "Kreg"));
-        dataSet.add(
-                new PelengEntity(new LatLng(56.723642, 37.770276),
-                        292f,
-                        new Date(),
-                        "Kreg"));
-        dataSet.add(
-                new PelengEntity(new LatLng(56.649173, 37.722923),
-                        55f,
-                        new Date(),
-                        "Kreg"));
-        dataSet.add(
-                new PelengEntity(new LatLng(56.787875, 37.821680),
-                        163f,
-                        new Date(),
-                        "Kreg"));
-
-         */
-
 
     }
-
 
 }

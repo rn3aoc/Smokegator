@@ -3,12 +3,10 @@ package com.example.smokegator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.Manifest;
 
-import com.example.smokegator.utils.Peleng;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,7 +16,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,16 +69,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        /** Called when the user taps the addPeleng button */
-        /*public void addPeleng(View view) {
-            Intent intent = new Intent(this, GetPelengActivity.class);
-            //EditText editText = (EditText) findViewById(R.id.editText);
-            //String message = editText.getText().toString();
-            //intent.putExtra(EXTRA_MESSAGE, message);
-            startActivity(intent);
-
-
-        } */
     }
 
     @Override
