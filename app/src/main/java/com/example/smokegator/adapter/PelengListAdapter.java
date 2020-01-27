@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.smokegator.R;
 import com.example.smokegator.data.PelengEntity;
+import com.example.smokegator.ui.CompassView;
+
 import java.util.List;
 import static com.example.smokegator.utils.PelengEntityToString.EntityToString;
 
@@ -17,8 +19,8 @@ public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.Vi
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public PelengListAdapter(Context context, List<PelengEntity> tvPelengText) {
-       this.mPelengEntities = tvPelengText;
+    public PelengListAdapter(Context context, List<PelengEntity> entityList) {
+       this.mPelengEntities = entityList;
     }
 
 
@@ -33,7 +35,8 @@ public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.Vi
     // binds the pelengEntities to the TextView in each row
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        viewHolder.myTextView.setText(EntityToString(mPelengEntities.get(position)));
+        viewHolder.myCompassIndicatorView.updateAzimuth(mPelengEntities.get(position).getBearing());
+        viewHolder.myRowStringView.setText(EntityToString(mPelengEntities.get(position)));
     }
 
     // total number of rows
@@ -45,11 +48,14 @@ public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.Vi
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+        CompassView myCompassIndicatorView;
+        TextView myRowStringView;
+
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvPelengText);
+            myCompassIndicatorView = itemView.findViewById(R.id.compass_view);
+            myRowStringView = itemView.findViewById(R.id.tvPelengText);
             itemView.setOnClickListener(this);
         }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smokegator 0.4 beta</string>
+    <string name="app_name">Smokegator 0.6.2 beta</string>
 
     <!-- Main menu -->
     <string name="action_settings">Settings</string>

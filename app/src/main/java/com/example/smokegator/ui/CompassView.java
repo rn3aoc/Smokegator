@@ -48,7 +48,7 @@ public class CompassView extends View {
 
         mPaint.setAntiAlias(true);
         mPaint.setStrokeWidth(2);
-        mPaint.setTextSize(25);
+        mPaint.setTextSize(26);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(color);
     }
@@ -66,10 +66,12 @@ public class CompassView extends View {
             // Sizing
             mX = getMeasuredWidth() / 2;
             mY = getMeasuredHeight() / 2;
-            mRadius = (float) (Math.max(mX, mY) * 0.6);
+            mRadius = (float) (Math.max(mX, mY) * 0.8);
 
             // Draw compass structure on the cached canvas
+            mPaint.setStrokeWidth(2);
             cachedCanvas.drawCircle(mX, mY, mRadius, mPaint);
+            cachedCanvas.drawCircle(mX, mY, mRadius*0.7f, mPaint);
             cachedCanvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
         }
 
@@ -77,13 +79,16 @@ public class CompassView extends View {
         canvas.drawBitmap(mCachedBitmap, 0, 0, mPaint);
 
         // Draw compass line
-        canvas.drawLine(mX, mY,
-                (float) (mX + mRadius * Math.sin((double) (-mAzimuthDegrees) / 180 * Math.PI)),
-                (float) (mY - mRadius * Math.cos((double) (-mAzimuthDegrees) / 180 * Math.PI)),
+        mPaint.setStrokeWidth(4);
+        canvas.drawLine(
+                (float) (mX + mRadius * 0.7f * Math.sin((double) (mAzimuthDegrees) / 180 * Math.PI)),
+                (float) (mY - mRadius * 0.7f * Math.cos((double) (mAzimuthDegrees) / 180 * Math.PI)),
+                (float) (mX + mRadius * Math.sin((double) (mAzimuthDegrees) / 180 * Math.PI)),
+                (float) (mY - mRadius * Math.cos((double) (mAzimuthDegrees) / 180 * Math.PI)),
                 mPaint);
 
         // Set text
-        canvas.drawText(String.format(Locale.getDefault(), "%.0f °", mAzimuthDegrees), mX, mY, mPaint);
+        canvas.drawText(String.format(Locale.getDefault(), "%.0f °", mAzimuthDegrees), mX - 22, mY +10, mPaint);
     }
 
     /**

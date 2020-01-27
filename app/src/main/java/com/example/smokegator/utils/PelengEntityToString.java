@@ -17,8 +17,8 @@ public class PelengEntityToString {
     @NotNull
     private static String DateToString(Date timestamp){
         SimpleDateFormat simpleDateFormat;
-        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ssz", Locale.US);
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
+        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Moscow")); //ToDo заменить на системную таймзону
         return  simpleDateFormat.format(timestamp);
     }
 
