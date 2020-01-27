@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="wildfire.volunteers.smokegator.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.example.smokegator.MapFragment"
+        android:name="wildfire.volunteers.smokegator.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

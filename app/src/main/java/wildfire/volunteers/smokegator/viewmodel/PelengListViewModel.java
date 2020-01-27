@@ -1,0 +1,67 @@
+package wildfire.volunteers.smokegator.viewmodel;
+
+import android.os.AsyncTask;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
+import wildfire.volunteers.smokegator.data.PelengEntity;
+import wildfire.volunteers.smokegator.data.PelengsRepo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PelengListViewModel extends ViewModel {
+
+
+    private MutableLiveData<List<PelengEntity>> mPelengs; //Holds Data
+    private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>(); //Represent when a query is made
+
+        public void init() {
+            if(mPelengs == null){
+                PelengsRepo mRepo = PelengsRepo.getInstance();
+                mPelengs = mRepo.getPelengEntity();
+            }
+
+         }
+
+
+    public void addNewValue(final PelengEntity pelengEntity){
+            mIsUpdating.setValue(true);
+
+           new AsyncTask<Void, Void, Void>() {
+               @Override
+               protected void onPostExecute(Void aVoid) {
+
+                   List<PelengEntity> currentPeleng = mPelengs.getValue();
+
+                    if(currentPeleng == null) {
+                        currentPeleng = new ArrayList<>();
+                        currentPeleng.add(pelengEntity);
+                        mPelengs.postValue(currentPeleng);
+                          } else {
+                   currentPeleng.add(pelengEntity);
+                   mPelengs.postValue(currentPeleng);
+                   mIsUpdating.setValue(false);
+               }
+           }
+
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    try{
+                        Thread.sleep(2000);
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+            }.execute();
+        }
+
+    public LiveData<List<PelengEntity>> getPelengEntity() { return mPelengs; }
+
+    public LiveData<Boolean> getIsUpdating(){
+        return mIsUpdating;
+    }
+
+}

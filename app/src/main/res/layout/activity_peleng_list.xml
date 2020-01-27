@@ -23,7 +23,7 @@
   <data>
    <variable
        name="PelengListViewModel"
-       type = "com.example.smokegator.viewmodel.PelengListViewModel"/>
+       type = "PelengListViewModel"/>
   </data> -->
 
 <!-- <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,7 +31,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.smokegator.PelengListActivity"> -->
+    tools:context="PelengListActivity"> -->
 
   <!-- <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/data_recycler_view"

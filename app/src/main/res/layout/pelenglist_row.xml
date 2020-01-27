@@ -4,14 +4,14 @@
  <!--   <data>
         <variable
             name="PelengListViewModel"
-            type="com.example.smokegator.viewmodel.PelengListViewModel"/>
+            type="PelengListViewModel"/>
     </data> -->
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
 
-    <com.example.smokegator.ui.CompassView
+    <wildfire.volunteers.smokegator.ui.CompassView
         android:id="@+id/compass_view"
         android:layout_width="60dp"
         android:layout_height="60dp"/>
