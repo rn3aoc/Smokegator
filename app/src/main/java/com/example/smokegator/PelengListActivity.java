@@ -25,10 +25,7 @@ public class PelengListActivity extends AppCompatActivity {
 
     private static final String TAG = "PelengListActivity";
 
-    private FloatingActionButton mFab;
-    private RecyclerView mRecyclerView;
     private PelengListAdapter mAdapter;
-    private ProgressBar mProgressBar;
     private PelengListViewModel pelengListViewModel;
 
 
@@ -39,64 +36,53 @@ public class PelengListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_peleng_list);
         Log.d(TAG, "onCreate: started");
 
-        initWidgets();
+       // initWidgets();
 
-        pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
-        pelengListViewModel.init();
 
-        //To observe changes done to the LiveData objects
-        pelengListViewModel.getPelengEntity().observe(this, new Observer<List<PelengEntity>>() {
-            @Override
-            public void onChanged(@Nullable List<PelengEntity> mPelengs) {
-                mAdapter.notifyDataSetChanged();
-            }
-        });
+            pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
+            pelengListViewModel.init();
 
-        pelengListViewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                if(aBoolean) {
-                    showProgressBar();
-                }else{
-                    hideProgressBar();
-                    mRecyclerView.smoothScrollToPosition(pelengListViewModel.getPelengEntity().getValue().size()-1);
+            //To observe changes done to the LiveData objects
+            pelengListViewModel.getPelengEntity().observe(this, new Observer<List<PelengEntity>>() {
+                @Override
+                public void onChanged(@Nullable List<PelengEntity> mPelengs) {
+                    mAdapter.notifyDataSetChanged();
                 }
-            }
-        });
+            });
 
 
-       /* mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pelengListViewModel.addNewValue(
-                        new PelengEntity(new LatLng(56.723642, 37.770276),
-                                70.5f,
-                                new Date(),
-                                "Kreg"
-                        ));
-            }
-        });*/
+            initRecyclerView();
 
-        initRecyclerView();
     }
 
-    private void initWidgets() {
+    /*private void initWidgets() {
        // mFab = findViewById(R.id.fab_peleng_list);
         mRecyclerView = findViewById(R.id.rvPelengs);
-        mProgressBar = findViewById(R.id.progress_circular);
+       mAdapter = new PelengListAdapter(this, pelengListViewModel.getPelengEntity().getValue());
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+      //  mProgressBar = findViewById(R.id.progress_circular);
+
+
     }
+
+     */
+
 
     private void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: init recyclerview.");
+        RecyclerView mRecyclerView = findViewById(R.id.rvPelengs);
         mAdapter = new PelengListAdapter(this, pelengListViewModel.getPelengEntity().getValue());
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+
     }
 
-    private void showProgressBar() { mProgressBar.setVisibility(View.VISIBLE); }
 
-    private void hideProgressBar() { mProgressBar.setVisibility(View.GONE); }
+
 
 }
 

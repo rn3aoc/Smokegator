@@ -17,7 +17,7 @@ public class PelengsRepo {
     public static PelengsRepo getInstance(){
         if(instance == null ){
             instance = new PelengsRepo();
-        }
+           }
         return instance;
     }
 
@@ -26,18 +26,21 @@ public class PelengsRepo {
         setPelengEntity();
 
         MutableLiveData<List<PelengEntity>> data = new MutableLiveData<>();
+
       // MutableLiveData<List<PelengEntity>> data;
-        data.setValue(dataSet);
+         data.setValue(dataSet);
         return data;
     }
 
     //Mimic data retrieval from database
     private void setPelengEntity(){
+        if(dataSet == null){
         dataSet.add(
+
                 new PelengEntity(new LatLng(37.7510, 14.9934),
                         70.5f,
                         new Date(),
-                        "Kreg"));
+                        "Kreg"));}
         /*
         dataSet.add(
                 new PelengEntity(new LatLng(56.723642, 37.770276),

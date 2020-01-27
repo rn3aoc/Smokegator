@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.smokegator.R;
 import com.example.smokegator.data.PelengEntity;
@@ -20,6 +21,8 @@ public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.Vi
     public PelengListAdapter(Context context, List<PelengEntity> tvPelengText) {
        this.mPelengEntities = tvPelengText;
     }
+
+
 
     // inflates the row layout from xml when needed
     @NonNull
@@ -38,9 +41,10 @@ public class PelengListAdapter extends RecyclerView.Adapter<PelengListAdapter.Vi
     // total number of rows
     @Override
     public int getItemCount() {
-
-         return mPelengEntities.size();
+        return mPelengEntities.size();
     }
+
+
 
 
     // stores and recycles views as they are scrolled off screen

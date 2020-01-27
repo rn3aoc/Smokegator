@@ -16,39 +16,28 @@ import java.util.List;
 
 public class PelengListViewModel extends ViewModel {
 
-//public class PelengListViewModel extends AndroidViewModel {
-    //private List<PelengEntity> Pelengs = new ArrayList<>();
 
-   // public List<PelengEntity> getmPelengs(){
-  //      return mPelengs;
-   // }
-
-        //Mutable = Can be indirectly change, unlike LiveData, which can only be observed
-       // private Application mApplication;
         private MutableLiveData<List<PelengEntity>> mPelengs; //Holds Data
         private PelengsRepo mRepo;
         private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>(); //Represent when a query is made
-        private PelengEntity currentPeleng;
-       /* public PelengListViewModel(PelengEntity pelengEntity){
-            ;
-        }
+        //private PelengEntity currentPeleng;
 
-        */
-   /* public PelengListViewModel(final Application application){
-        super(application);
-
-    }
-
-    */
-
-        public void init(){
-            if(mPelengs != null){
-                return;
+        public void init() {
+            if(mPelengs == null){
+                mRepo = PelengsRepo.getInstance();
+                mPelengs = mRepo.getPelengEntity();
             }
-            mPelengs = new MutableLiveData<>();
-            mRepo = PelengsRepo.getInstance();
-            mPelengs = mRepo.getPelengEntity();
-               }
+
+            /*if (mPelengs != null) {
+                return;
+            } else {
+                mPelengs = new MutableLiveData<>();
+                mRepo = PelengsRepo.getInstance();
+                mPelengs = mRepo.getPelengEntity();
+            }
+
+             */
+        }
 
 
 
@@ -89,7 +78,9 @@ public class PelengListViewModel extends ViewModel {
             }.execute();
         }
 
-    public LiveData<List<PelengEntity>> getPelengEntity(){ return mPelengs; }
+    public LiveData<List<PelengEntity>> getPelengEntity(){
+
+            return mPelengs; }
 
     public LiveData<Boolean> getIsUpdating(){
         return mIsUpdating;
