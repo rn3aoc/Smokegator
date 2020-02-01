@@ -48,14 +48,20 @@ public class GetPelengActivity extends AppCompatActivity {
                                           longitude = findViewById(R.id.editTextLng);
                                           bearing = findViewById(R.id.editTextMBearing);
 
-                                          double aDoublelat = Double.parseDouble(latitude.getText().toString());
-                                          double aDoublelon = Double.parseDouble(longitude.getText().toString());
-                                          float aFloatbearing = Float.parseFloat(bearing.getText().toString());
+                                          //double aDoublelat = Double.parseDouble(latitude.getText().toString());
+                                         // double aDoublelon = Double.parseDouble(longitude.getText().toString());
+                                        //  float aFloatbearing = Float.parseFloat(bearing.getText().toString());
 
-                                          PelengEntity nEntity = FormToPelengEntity.NewPelengEntity(
-                                                  aDoublelat,
-                                                  aDoublelon,
-                                                  aFloatbearing
+                                         /* PelengEntity nEntity = FormToPelengEntity.NewPelengEntity(
+                                                  Double.parseDouble(latitude.getText().toString()),
+                                                  Double.parseDouble(longitude.getText().toString()),
+                                                  Float.parseFloat(bearing.getText().toString())
+                                          );*/
+
+                                          PelengEntity nEntity = mViewModel.NewPelengEntity(
+                                                  Double.parseDouble(latitude.getText().toString()),
+                                                  Double.parseDouble(longitude.getText().toString()),
+                                                  Float.parseFloat(bearing.getText().toString())
                                           );
 
                                           mViewModel.addNewValue(nEntity);
