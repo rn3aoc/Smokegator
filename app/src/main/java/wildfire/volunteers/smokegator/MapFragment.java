@@ -1,10 +1,12 @@
 package wildfire.volunteers.smokegator;
 
 import android.content.SharedPreferences;
+import android.location.LocationProvider;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -27,10 +29,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 
-public class    MapFragment extends Fragment implements OnMapReadyCallback {
+import static com.google.maps.android.SphericalUtil.computeOffset;
+
+public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private MapView mapView;
     private GoogleMap map;
@@ -82,8 +88,10 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
         }
 
         map.getUiSettings().setMyLocationButtonEnabled(true);
-        map.getUiSettings().setCompassEnabled(true);
+        map.getUiSettings().setCompassEnabled(false);
+        map.getUiSettings().setRotateGesturesEnabled(false);
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.723641, 37.770276), 12));
+        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(, 12));
 
         PelengListViewModel pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
         pelengListViewModel.init();
@@ -97,12 +105,22 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
                 for (int i = 0; i < mPelengs.size(); i++) {
                     Marker mMarker = map.addMarker(new MarkerOptions()
                             .position(mPelengs.get(i).getLatLng())
-                            .anchor(0.5f, 35f / 42.0f)
+                            .anchor(0.5f, 287f/300f) // hardcoded icon size
                             .flat(true)
                             .rotation(mPelengs.get(i).getBearing())
                             //.icon(BitmapDescriptorFactory.fromResource(R.drawable.peleng_darkred_30px))
-                            .icon(BitmapDescriptorFactory.fromBitmap(new MarkerIcon(45f,mPelengs.get(i).getTimestamp(), mPelengs.get(i).getCallsign()).getBitmap()))
+                            .icon(BitmapDescriptorFactory.fromBitmap(new MarkerIcon(
+                                    mPelengs.get(i).getBearing(),
+                                    mPelengs.get(i).getTimestamp(),
+                                    mPelengs.get(i).getCallsign()).getBitmap()))
                             .alpha(0.8f));
+                    Polyline mPolyline = map.addPolyline(new PolylineOptions()
+                            .clickable(true)
+                            .width(2)
+                            .add(
+                                    mPelengs.get(i).getLatLng(),
+                                    pelengToLatLng(mPelengs.get(i).getLatLng(), mPelengs.get(i).getBearing())
+                            ));
                 }
 
 
@@ -136,6 +154,13 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
+    }
+
+    private LatLng pelengToLatLng(LatLng mLatLng, float mBearing){
+        double distance = sharedPreferences.getInt("pelenglength", 15)*300; // 0-30 km
+        // double distance = 10; // хардкод длины пеленга
+        LatLng endPoint = computeOffset(mLatLng, distance, mBearing);
+        return endPoint;
     }
 
 }
