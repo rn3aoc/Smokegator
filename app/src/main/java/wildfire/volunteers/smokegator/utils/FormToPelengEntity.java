@@ -1,14 +1,15 @@
 package wildfire.volunteers.smokegator.utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
-
+import androidx.preference.PreferenceManager;
 import wildfire.volunteers.smokegator.data.PelengEntity;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 
 public class FormToPelengEntity {
-    private static SharedPreferences sharedPreferences;
+    private  SharedPreferences sharedPreferences;
     /*private String callsign;
     private double latitude;
     private double longitude;
@@ -16,23 +17,26 @@ public class FormToPelengEntity {
     private LatLng latLng;
 
      */
+    private Context context;
 
 
-
-    private static LatLng FormFieldsToLatLng(double latitude, double longitude){
+    private LatLng FormFieldsToLatLng(double latitude, double longitude){
 
         return new LatLng(latitude, longitude);
     }
 
 
-    public static PelengEntity NewPelengEntity(double latitude,
+    public PelengEntity NewPelengEntity(double latitude,
                                                double longitude,
                                                float bearing){
 
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+
         LatLng mLatLng =  FormFieldsToLatLng(latitude, longitude);
         Date timestamp = new Date();
-        String callsign = "Kreg";
-        //String callsign = sharedPreferences.getString("callsign", "");
+        //String callsign = "Kreg";  //ToDo replace to stored user callsign
+        String callsign = sharedPreferences.getString("callsign", "default");
         return new PelengEntity(mLatLng, bearing, timestamp, callsign);
 
     }

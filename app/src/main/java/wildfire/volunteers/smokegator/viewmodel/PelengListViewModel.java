@@ -1,26 +1,43 @@
 package wildfire.volunteers.smokegator.viewmodel;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.preference.PreferenceManager;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import wildfire.volunteers.smokegator.data.PelengEntity;
 import wildfire.volunteers.smokegator.data.PelengsRepo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class PelengListViewModel extends ViewModel {
+public class PelengListViewModel extends AndroidViewModel {
 
 
     private MutableLiveData<List<PelengEntity>> mPelengs; //Holds Data
     private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>(); //Represent when a query is made
+    private SharedPreferences sharedPreferences;
+    private Context context;
 
-        public void init() {
-            if(mPelengs == null){
+    public PelengListViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    public void init() {
+           if(mPelengs == null){
                 PelengsRepo mRepo = PelengsRepo.getInstance();
                 mPelengs = mRepo.getPelengEntity();
+
             }
 
          }
@@ -62,6 +79,28 @@ public class PelengListViewModel extends ViewModel {
 
     public LiveData<Boolean> getIsUpdating(){
         return mIsUpdating;
+    }
+
+    private LatLng FormFieldsToLatLng(double latitude, double longitude){
+
+        return new LatLng(latitude, longitude);
+    }
+
+
+    public PelengEntity NewPelengEntity(double latitude,
+                                        double longitude,
+                                        float bearing){
+
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication());
+       // sharedPreferences = PreferenceManager.getDefaultSharedPreferences();
+
+        LatLng mLatLng =  FormFieldsToLatLng(latitude, longitude);
+        Date timestamp = new Date();
+        //String callsign = "Kreg";  //ToDo replace to stored user callsign
+        String callsign = sharedPreferences.getString("callsign", "default");
+        return new PelengEntity(mLatLng, bearing, timestamp, callsign);
+
     }
 
 }

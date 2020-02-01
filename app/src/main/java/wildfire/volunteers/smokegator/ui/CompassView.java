@@ -79,6 +79,7 @@ public class CompassView extends View {
         canvas.drawBitmap(mCachedBitmap, 0, 0, mPaint);
 
         // Draw compass line
+        mPaint.setColor(Color.RED);
         mPaint.setStrokeWidth(4);
         canvas.drawLine(
                 (float) (mX + mRadius * 0.7f * Math.sin((double) (mAzimuthDegrees) / 180 * Math.PI)),

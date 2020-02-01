@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import wildfire.volunteers.smokegator.R;
 
 import wildfire.volunteers.smokegator.data.PelengEntity;
+import wildfire.volunteers.smokegator.ui.MarkerIcon;
 import wildfire.volunteers.smokegator.viewmodel.PelengListViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -82,7 +83,7 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
 
         map.getUiSettings().setMyLocationButtonEnabled(true);
         map.getUiSettings().setCompassEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.723641, 37.770276), 12));
+        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.723641, 37.770276), 12));
 
         PelengListViewModel pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
         pelengListViewModel.init();
@@ -99,7 +100,8 @@ public class    MapFragment extends Fragment implements OnMapReadyCallback {
                             .anchor(0.5f, 35f / 42.0f)
                             .flat(true)
                             .rotation(mPelengs.get(i).getBearing())
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.peleng_darkred_30px))
+                            //.icon(BitmapDescriptorFactory.fromResource(R.drawable.peleng_darkred_30px))
+                            .icon(BitmapDescriptorFactory.fromBitmap(new MarkerIcon(45f,mPelengs.get(i).getTimestamp(), mPelengs.get(i).getCallsign()).getBitmap()))
                             .alpha(0.8f));
                 }
 
