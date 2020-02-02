@@ -23,14 +23,12 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    //public SharedPreferences mSharedPreferences;
     public static Context contextOfApplication;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static Context getContextOfApplication(){
         return contextOfApplication;
     }
-   // public SharedPreferences sharedPreferences =
-   //         PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
+
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)

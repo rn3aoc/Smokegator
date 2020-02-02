@@ -1,7 +1,6 @@
 package wildfire.volunteers.smokegator.viewmodel;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
@@ -25,11 +24,10 @@ public class PelengListViewModel extends AndroidViewModel {
 
 
     private MutableLiveData<List<PelengEntity>> mPelengs; //Holds Data
-    private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>(); //Represent when a query is made
-    private SharedPreferences sharedPreferences;
-    private Context context;
+    private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>();//Represent when a query is made
 
     public PelengListViewModel(@NonNull Application application) {
+
         super(application);
     }
 
@@ -75,9 +73,12 @@ public class PelengListViewModel extends AndroidViewModel {
             }.execute();
         }
 
-    public LiveData<List<PelengEntity>> getPelengEntity() { return mPelengs; }
+    public LiveData<List<PelengEntity>> getPelengEntity() {
+        return mPelengs;
+    }
 
     public LiveData<Boolean> getIsUpdating(){
+
         return mIsUpdating;
     }
 
@@ -92,12 +93,10 @@ public class PelengListViewModel extends AndroidViewModel {
                                         float bearing){
 
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication());
-       // sharedPreferences = PreferenceManager.getDefaultSharedPreferences();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication());
 
         LatLng mLatLng =  FormFieldsToLatLng(latitude, longitude);
         Date timestamp = new Date();
-        //String callsign = "Kreg";  //ToDo replace to stored user callsign
         String callsign = sharedPreferences.getString("callsign", "default");
         return new PelengEntity(mLatLng, bearing, timestamp, callsign);
 
