@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.smokegator">
+    package="wildfire.volunteers.smokegator">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -13,39 +13,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.ARPelengator"></activity>
+
+        <activity android:name="wildfire.volunteers.smokegator.ui.ARPelengator"></activity>
 
         <provider
-            android:name=".utils.PelengProvider"
-            android:authorities="com.example.smokegator.provider"
+            android:name="wildfire.volunteers.smokegator.utils.PelengProvider"
+            android:authorities="wildfire.volunteers.smokegator.provider"
             android:enabled="true"
             android:exported="true" />
 
         <activity
-            android:name=".SettingsActivity"
+            android:name="wildfire.volunteers.smokegator.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="wildfire.volunteers.smokegator.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.smokegator.MainActivity" />
+                android:value="wildfire.volunteers.smokegator.MainActivity" />
         </activity>
         <activity
-            android:name=".PelengListActivity"
+            android:name="wildfire.volunteers.smokegator.PelengListActivity"
             android:label="@string/title_activity_pelenglist"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="wildfire.volunteers.smokegator.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.smokegator.MainActivity" />
+                android:value="wildfire.volunteers.smokegator.MainActivity" />
         </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" /> <!-- <uses-library android:name="com.google.android.maps" /> -->
         <activity
-            android:name=".GetPelengActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="wildfire.volunteers.smokegator.GetPelengActivity"
+            android:parentActivityName="wildfire.volunteers.smokegator.MainActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name="wildfire.volunteers.smokegator.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

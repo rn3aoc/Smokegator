@@ -45,20 +45,12 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:854594613393:android:bcb2ececbbeabe19014f30",
+        "mobilesdk_app_id": "1:854594613393:android:70a7d8602e2f461a014f30",
         "android_client_info": {
-          "package_name": "com.example.smokegator_0_4"
+          "package_name": "wildfire.volunteers.smokegator"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "854594613393-hkhn2q1qnmeuq8n6ngnqlivei8lel04i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.smokegator_0_4",
-            "certificate_hash": "d4c215289253cb0b8baede73a4e2e4e7b0917f87"
-          }
-        },
         {
           "client_id": "854594613393-c2j0u3omiikm6vkbdmdn7gh88niufadk.apps.googleusercontent.com",
           "client_type": 3
