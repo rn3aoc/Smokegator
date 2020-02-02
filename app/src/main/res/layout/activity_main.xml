@@ -51,4 +51,10 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/compass_2" />
 
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_view" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

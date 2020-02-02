@@ -2,10 +2,12 @@ package wildfire.volunteers.smokegator;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.LocationProvider;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+//import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -48,20 +50,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         View v = inflater.inflate(R.layout.fragment_map, container, false);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext()/* Activity context */);
+           sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext()/* Activity context */);
 
         // Gets the MapView from the XML layout and creates it
         mapView = (MapView) v.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
-
-        // mapView.onCreate(mapViewSavedInstanceState); // Changed by dvs
 
         mapView.getMapAsync(this);
 
         return v;
 
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -107,10 +106,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.723641, 37.770276), 12));
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(, 12));
 
-
         PelengListViewModel pelengListViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
         pelengListViewModel.init();
         LiveData<List<PelengEntity>> pelengEntities = pelengListViewModel.getPelengEntity();
+
 
         pelengEntities.observe(this, new Observer<List<PelengEntity>>() {
             @Override
