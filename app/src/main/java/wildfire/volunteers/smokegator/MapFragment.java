@@ -52,9 +52,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mapView = (MapView) v.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
-
         mapView.getMapAsync(this);
-
 
         return v;
 
@@ -90,6 +88,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         map.getUiSettings().setMyLocationButtonEnabled(true);
         map.getUiSettings().setCompassEnabled(false);
         map.getUiSettings().setRotateGesturesEnabled(false);
+        //map.getUiSettings().setZoomControlsEnabled(true);
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(56.723641, 37.770276), 12));
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(, 12));
 
