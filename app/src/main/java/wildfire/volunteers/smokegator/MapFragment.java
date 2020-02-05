@@ -2,6 +2,7 @@ package wildfire.volunteers.smokegator;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.hardware.GeomagneticField;
 import android.location.LocationProvider;
 import android.os.Bundle;
 
@@ -44,6 +45,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private MapView mapView;
     private GoogleMap map;
     private SharedPreferences sharedPreferences;
+    private float inclination;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

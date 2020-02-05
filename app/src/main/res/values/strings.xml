@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smokegator 0.6.2 beta</string>
+    <string name="app_name">Smokegator 0.6.4 beta</string>
 
     <!-- Main menu -->
     <string name="action_settings">Settings</string>
@@ -29,6 +29,7 @@
     <!-- Preference Titles -->
     <string name="user_login">Пользователь</string>
     <string name="map_header">Карта</string>
+    <string name="pelengator_header">Пеленгатор</string>
     <string name="sync_header">Синхронизация</string>
 
     <!-- Preference Login -->
@@ -37,9 +38,7 @@
     <string name="user_isregistered_off">Анонимный доступ, только просмотр</string>
 
     <string name="user_email">E-mail</string>
-
     <string name="user_password">Пароль</string>
-
     <string name="user_callsign">Позывной</string>
 
     <!-- Preferences Map -->
@@ -50,6 +49,11 @@
     <string name="map_maptype_default">MAP_TYPE_NORMAL</string>
     <string name="maptype_title">Тип карты</string>
     <string name="peleng_length">Длина пеленга, 0 - 30 км</string>
+
+    <!-- Preferences Pelengator -->
+    <string name="pelengator_gps_title">Пеленг по GPS</string>
+    <string name="pelengator_gps_off">Выключен</string>
+    <string name="pelengator_gps_on">Включен</string>
 
     <!-- Sync Preferences -->
     <string name="tracker_title">Трекер</string>
@@ -63,5 +67,23 @@
     <string name="title_activity_arpelengator">ARPelengatorActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
+    <!-- GetPeleng UI. ToDo rearrange this -->
+
+    <string name="latitude_label">Latitude</string>
+    <string name="longitude_label">Longitude</string>
+    <string name="last_update_time_label">Last location update time</string>
+
+    <string name="start_updates">Start updates</string>
+    <string name="stop_updates">Stop updates</string>
+
+    <string name="location_settings_inadequate_warning">The location settings on the device are not
+        adequate to run this sample. Fix in Settings.</string>
+
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core
+        functionality.</string>
+    <string name="settings">Settings</string>
 
 </resources>

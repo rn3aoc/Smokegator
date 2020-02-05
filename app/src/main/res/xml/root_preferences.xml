@@ -71,6 +71,14 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/pelengator_header">
+        <SwitchPreferenceCompat
+            app:key="pelengator_gps"
+            app:summaryOff="@string/pelengator_gps_off"
+            app:summaryOn="@string/pelengator_gps_on"
+            app:title="@string/pelengator_gps_title" />
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/sync_header">
 
         <SwitchPreferenceCompat
