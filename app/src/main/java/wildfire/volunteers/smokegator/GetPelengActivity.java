@@ -3,13 +3,17 @@ package wildfire.volunteers.smokegator;
 import android.Manifest;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.hardware.GeomagneticField;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +44,7 @@ import java.util.Locale;
 
 import wildfire.volunteers.smokegator.R;
 import wildfire.volunteers.smokegator.data.PelengEntity;
+import wildfire.volunteers.smokegator.ui.CompassView;
 import wildfire.volunteers.smokegator.utils.FormToPelengEntity;
 import wildfire.volunteers.smokegator.utils.PelengEntityToString;
 import wildfire.volunteers.smokegator.viewmodel.PelengListViewModel;
@@ -104,12 +109,21 @@ public class GetPelengActivity extends AppCompatActivity {
      */
     private Location mCurrentLocation;
 
+    /*
+    * Local geomagnetic inclination object.
+     */
+    private GeomagneticField mGeomagneticField;
+
     // UI Widgets.
     private Button mStartUpdatesButton; //ToDo change to on/off trigger button
     private Button mStopUpdatesButton;
     private EditText latitude;
     private EditText longitude;
-    private EditText bearing;
+    private EditText magBearing;
+    private EditText trueBearing;
+    private TextView accuracy;
+    private TextView inclination;
+    private CompassView compassView;
 
     /**
      * Tracks the status of the location updates request. Value changes when the user presses the
@@ -154,7 +168,46 @@ public class GetPelengActivity extends AppCompatActivity {
 
         latitude = (EditText)findViewById(R.id.editTextLat);
         longitude = findViewById(R.id.editTextLng);
-        bearing = findViewById(R.id.editTextMBearing);
+        magBearing = findViewById(R.id.editTextMBearing);
+        trueBearing = findViewById(R.id.editTextTBearing);
+        accuracy = findViewById(R.id.AccuracyTextView);
+        inclination = findViewById(R.id.inclinationTextView);
+        compassView = findViewById(R.id.compass_view);
+
+        // Mag and True bearings EditText recounting
+        magBearing.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                trueBearing.setText(magBearing.getText());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        // Update compass indicator
+        /*trueBearing.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                compassView.updateAzimuth(45f);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        }); */
+
+
+
 
 
         Button button = (Button) findViewById(R.id.button);
@@ -177,7 +230,7 @@ public class GetPelengActivity extends AppCompatActivity {
                                          PelengEntity nEntity = mViewModel.NewPelengEntity(
                                                   Double.parseDouble(latitude.getText().toString()),
                                                   Double.parseDouble(longitude.getText().toString()),
-                                                  Float.parseFloat(bearing.getText().toString()));
+                                                  Float.parseFloat(magBearing.getText().toString()));
 
                                           mViewModel.addNewValue(nEntity);
 
@@ -276,9 +329,12 @@ public class GetPelengActivity extends AppCompatActivity {
      */
     private void updateLocationUI() {
         if (mCurrentLocation != null) {
-            Toast.makeText(getApplicationContext(), String.valueOf(mCurrentLocation.getLatitude()), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), String.valueOf(mCurrentLocation.getLatitude()), Toast.LENGTH_SHORT).show();
             latitude.setText(String.valueOf(mCurrentLocation.getLatitude()));
             longitude.setText(String.valueOf(mCurrentLocation.getLongitude()));
+            accuracy.setText(String.valueOf(mCurrentLocation.getAccuracy()));
+            inclination.setText(String.format(Locale.US, "Incl. %.2f°", mGeomagneticField.getDeclination()));
+
 
             //mLastUpdateTimeTextView.setText(String.format(Locale.ENGLISH, "%s: %s", mLastUpdateTimeLabel, mLastUpdateTime));
         }
@@ -295,6 +351,11 @@ public class GetPelengActivity extends AppCompatActivity {
 
                 mCurrentLocation = locationResult.getLastLocation();
                 mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+                mGeomagneticField = new GeomagneticField(
+                        (float)mCurrentLocation.getLatitude(),
+                        (float)mCurrentLocation.getLongitude(),
+                        (float)mCurrentLocation.getAltitude(),
+                        new Date().getTime());
                 updateLocationUI();
             }
         };

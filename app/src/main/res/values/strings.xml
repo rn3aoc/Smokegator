@@ -14,12 +14,21 @@
     <string name="text_location_permission">Разрешить доступ к локации</string>
     <string name="ok">ОК</string>
     <string name="add">Добавить</string>
+
+    <!-- GetPelengActivity -->
     <string name="az">Азимут</string>
     <string name="lat">Широта</string>
     <string name="lon">Долгота</string>
     <string name="input_peleng">Ввод пеленга</string>
     <string name="send">Отправить</string>
     <string name="m_bearing">Магнитный азимут</string>
+    <string name="t_bearung">Истинный азимут</string>
+    <string name="GPS_On">GPS включен</string>
+    <string name="GPS_Off">GPS выключен</string>
+    <string name="GPS_ToggleButton">GPS ToggleButton</string>
+    <string name="accuracy">точность</string>
+    <string name="inclination">магнитное склонение</string>
+
 
     <string name="compass_image_description">Image of a compass rose, that rotates based on your
         orientation</string>
