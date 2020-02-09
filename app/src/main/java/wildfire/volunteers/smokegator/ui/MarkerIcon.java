@@ -56,7 +56,7 @@ public class MarkerIcon {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.BLACK);
         mCanvas.drawText(mCallsign, 80, 30, mPaint);
-        mCanvas.drawText(mTimestamp + ", (" + mBearing + "°)", 80, 65, mPaint); //ToDo round bearing to Int?
+        mCanvas.drawText(mTimestamp + ", (" + (int)mBearing + "°)", 80, 65, mPaint);
 
         // mCanvas.drawARGB(20,255,0,0); // test filling
 

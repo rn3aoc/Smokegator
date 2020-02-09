@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smokegator 0.6.4 beta</string>
+    <string name="app_name">Smokegator 0.7.1 beta</string>
 
     <!-- Main menu -->
     <string name="action_settings">Settings</string>
@@ -19,10 +19,14 @@
     <string name="az">Азимут</string>
     <string name="lat">Широта</string>
     <string name="lon">Долгота</string>
+    <string name="lat_hint">00.000</string>
+    <string name="lon_hint">00.000</string>
     <string name="input_peleng">Ввод пеленга</string>
     <string name="send">Отправить</string>
-    <string name="m_bearing">Магнитный азимут</string>
-    <string name="t_bearung">Истинный азимут</string>
+    <string name="bearing">Азимут</string>
+    <string name="m_bearing">магнитный</string>
+    <string name="t_bearung">истинный</string>
+    <string name="bearing_hint">000.0</string>
     <string name="GPS_On">GPS включен</string>
     <string name="GPS_Off">GPS выключен</string>
     <string name="GPS_ToggleButton">GPS ToggleButton</string>

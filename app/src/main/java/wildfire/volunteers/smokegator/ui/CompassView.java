@@ -59,6 +59,10 @@ public class CompassView extends View {
 
         // Draw compass structure on a cached bitmap
         if (mCachedBitmap == null) {
+
+            mPaint.setColor(Color.BLACK);
+            mPaint.setStrokeWidth(2);
+            mPaint.setStyle(Paint.Style.STROKE);
             // Prepare cached bitmap & canvas
             mCachedBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888); //Change to lower bitmap config if possible.
             Canvas cachedCanvas = new Canvas(mCachedBitmap);
@@ -75,12 +79,15 @@ public class CompassView extends View {
             cachedCanvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
         }
 
-        // Set cached bitmap on the canvas
-        canvas.drawBitmap(mCachedBitmap, 0, 0, mPaint);
+        // Set text
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setColor(Color.BLACK);
+        canvas.drawText(String.format(Locale.getDefault(), "%.0f °", mAzimuthDegrees), mX - 22, mY +10, mPaint);
 
         // Draw compass line
         mPaint.setColor(Color.RED);
-        mPaint.setStrokeWidth(4);
+        mPaint.setStrokeWidth(6);
+        mPaint.setStyle(Paint.Style.STROKE);
         canvas.drawLine(
                 (float) (mX + mRadius * 0.7f * Math.sin((double) (mAzimuthDegrees) / 180 * Math.PI)),
                 (float) (mY - mRadius * 0.7f * Math.cos((double) (mAzimuthDegrees) / 180 * Math.PI)),
@@ -88,8 +95,8 @@ public class CompassView extends View {
                 (float) (mY - mRadius * Math.cos((double) (mAzimuthDegrees) / 180 * Math.PI)),
                 mPaint);
 
-        // Set text
-        canvas.drawText(String.format(Locale.getDefault(), "%.0f °", mAzimuthDegrees), mX - 22, mY +10, mPaint);
+        // Set cached bitmap on the canvas
+        canvas.drawBitmap(mCachedBitmap, 0, 0, mPaint);
     }
 
     /**

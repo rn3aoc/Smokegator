@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -83,6 +84,13 @@ public class GetPelengActivity extends AppCompatActivity {
     private final static String KEY_LOCATION = "location";
     private final static String KEY_LAST_UPDATED_TIME_STRING = "last-updated-time-string";
 
+    /*
+    * Possible Azimuth values
+     */
+    private static final float MIN_BEARING = 0f;
+    private static final float MAX_BEARING = 360f;
+
+
     /**
      * Provides access to the Fused Location Provider API.
      */
@@ -112,17 +120,18 @@ public class GetPelengActivity extends AppCompatActivity {
     /*
     * Local geomagnetic inclination object.
      */
-    private GeomagneticField mGeomagneticField;
+    private GeomagneticField mGeomagneticField = new GeomagneticField(0,0,0, new Date().getTime());
 
     // UI Widgets.
     private Button mStartUpdatesButton; //ToDo change to on/off trigger button
     private Button mStopUpdatesButton;
-    private EditText latitude;
-    private EditText longitude;
+    private ToggleButton mToggleButton;
+    private EditText latitudeView;
+    private EditText longitudeView;
     private EditText magBearing;
     private EditText trueBearing;
     private TextView accuracy;
-    private TextView inclination;
+    private TextView inclinationView;
     private CompassView compassView;
 
     /**
@@ -136,6 +145,8 @@ public class GetPelengActivity extends AppCompatActivity {
      */
     private String mLastUpdateTime;
 
+    private float mInclination;
+
 
     private PelengListViewModel mViewModel;
 
@@ -147,6 +158,7 @@ public class GetPelengActivity extends AppCompatActivity {
 
         mStartUpdatesButton = (Button) findViewById(R.id.start_updates_button);
         mStopUpdatesButton = (Button) findViewById(R.id.stop_updates_button);
+        mToggleButton = findViewById(R.id.GPStoggleButton);
 
         mViewModel = ViewModelProviders.of(this).get(PelengListViewModel.class);
         mViewModel.init();
@@ -166,45 +178,142 @@ public class GetPelengActivity extends AppCompatActivity {
         createLocationRequest();
         buildLocationSettingsRequest();
 
-        latitude = (EditText)findViewById(R.id.editTextLat);
-        longitude = findViewById(R.id.editTextLng);
+        latitudeView = (EditText)findViewById(R.id.editTextLat);
+        longitudeView = findViewById(R.id.editTextLng);
         magBearing = findViewById(R.id.editTextMBearing);
         trueBearing = findViewById(R.id.editTextTBearing);
         accuracy = findViewById(R.id.AccuracyTextView);
-        inclination = findViewById(R.id.inclinationTextView);
-        compassView = findViewById(R.id.compass_view);
+        inclinationView = findViewById(R.id.inclinationTextView);
+        compassView = findViewById(R.id.compassView);
 
-        // Mag and True bearings EditText recounting
-        magBearing.addTextChangedListener(new TextWatcher() {
+        // Check latitude input
+        latitudeView.addTextChangedListener(new TextWatcher() {
+            double latitude;
+            double longitude;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                trueBearing.setText(magBearing.getText());
+                if (latitudeView.getText().toString().isEmpty()) latitude = 0;
+                    else latitude = Float.parseFloat(latitudeView.getText().toString());
+
+                if (Math.abs(latitude) > 90d)
+                    latitudeView.setError("Latitude cannot be more than 90 degrees");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (latitudeView.getText().toString().isEmpty()) latitude = 0;
+                    else latitude = Float.parseFloat(latitudeView.getText().toString());
+                if (longitudeView.getText().toString().isEmpty()) longitude = 0;
+                    else longitude = Float.parseFloat(longitudeView.getText().toString());
+
+                mGeomagneticField = new GeomagneticField(
+                        (float) latitude,
+                        (float) longitude,
+                        0f,
+                        new Date().getTime());
+
+                inclinationView.setText(String.format(Locale.US, "Incl. %.2f°", mGeomagneticField.getDeclination()));
+            }
+        });
+
+        // Check longitude input
+        longitudeView.addTextChangedListener(new TextWatcher() {
+            double latitude;
+            double longitude;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (latitudeView.getText().toString().isEmpty()) longitude = 0;
+                    else longitude = Float.parseFloat(longitudeView.getText().toString());
+
+                if (Math.abs(longitude) > 180d)
+                    longitudeView.setError("Longitude cannot be more than 180 degrees");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (latitudeView.getText().toString().isEmpty()) latitude = 0;
+                    else latitude = Float.parseFloat(latitudeView.getText().toString());
+                if (longitudeView.getText().toString().isEmpty()) longitude = 0;
+                    else longitude = Float.parseFloat(longitudeView.getText().toString());
+                mGeomagneticField = new GeomagneticField(
+                        (float) latitude,
+                        (float) longitude,
+                        0f,
+                        new Date().getTime());
+
+                inclinationView.setText(String.format(Locale.US, "Incl. %.2f°", mGeomagneticField.getDeclination()));
+            }
+        });
+
+        // Mag and True bearings EditText recounting
+        magBearing.addTextChangedListener(new TextWatcher() {
+
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                float magbearing;
+                float truebearing;
+                float inclination;
+                // in case of editText field is cleaned
+                if (magBearing.getText().toString().isEmpty()) magbearing = 0;
+                else magbearing = Float.parseFloat(magBearing.getText().toString());
+
+                if(magbearing > 360)
+                    trueBearing.setError("Peleng value cannot be more than 360.");
+                if(magbearing < 0)
+                    trueBearing.setError("Peleng value cannot be negative.");
+
+                // recalculate truebearing
+                inclination = mGeomagneticField.getDeclination();
+                if (magbearing - inclination < 0)
+                    truebearing = magbearing - inclination + 360f;
+                else {
+                    if (magbearing - inclination > 360)
+                        truebearing = magbearing - inclination - 360f;
+                    else truebearing = magbearing - inclination;
+                }
+
+                trueBearing.setText(String.valueOf(truebearing));
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        // Update compass indicator
-        /*trueBearing.addTextChangedListener(new TextWatcher() {
+        // Check azimuth, update compass indicator
+        trueBearing.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                compassView.updateAzimuth(45f);
+                float bearing;
+                // in case of editText field is cleaned
+                if (trueBearing.getText().toString().isEmpty()) bearing = 0;
+                    else bearing = Float.parseFloat(trueBearing.getText().toString());
+
+                if(bearing > 360)
+                    trueBearing.setError("Peleng value cannot be more than 360.");
+                if(bearing < 0)
+                    trueBearing.setError("Peleng value cannot be negative.");
+
+                compassView.updateAzimuth(bearing);
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        }); */
+            public void afterTextChanged(Editable s) {}
+        });
 
 
 
@@ -214,9 +323,7 @@ public class GetPelengActivity extends AppCompatActivity {
                     button.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
-
-
-                                         // double aDoublelat = Double.parseDouble(latitude.getText().toString());
+                                          // double aDoublelat = Double.parseDouble(latitude.getText().toString());
                                           //double aDoublelon = Double.parseDouble(longitude.getText().toString());
                                           //float aFloatbearing = Float.parseFloat(bearing.getText().toString());
 
@@ -228,24 +335,18 @@ public class GetPelengActivity extends AppCompatActivity {
 
                                            */
                                          PelengEntity nEntity = mViewModel.NewPelengEntity(
-                                                  Double.parseDouble(latitude.getText().toString()),
-                                                  Double.parseDouble(longitude.getText().toString()),
-                                                  Float.parseFloat(magBearing.getText().toString()));
+                                                  Double.parseDouble(latitudeView.getText().toString()),
+                                                  Double.parseDouble(longitudeView.getText().toString()),
+                                                  Float.parseFloat(trueBearing.getText().toString()));
 
                                           mViewModel.addNewValue(nEntity);
-
-
 
                                           if(nEntity != null){
                                               Toast.makeText(getApplicationContext(), PelengEntityToString.EntityToString(nEntity), Toast.LENGTH_SHORT).show();
                                           } else {Toast.makeText(getApplicationContext(), "NOTHING", Toast.LENGTH_SHORT).show();}
-
-
                                         }
 
                                       });
-
-
     }
 
     @Override
@@ -330,10 +431,10 @@ public class GetPelengActivity extends AppCompatActivity {
     private void updateLocationUI() {
         if (mCurrentLocation != null) {
             //Toast.makeText(getApplicationContext(), String.valueOf(mCurrentLocation.getLatitude()), Toast.LENGTH_SHORT).show();
-            latitude.setText(String.valueOf(mCurrentLocation.getLatitude()));
-            longitude.setText(String.valueOf(mCurrentLocation.getLongitude()));
+            latitudeView.setText(String.valueOf(mCurrentLocation.getLatitude()));
+            longitudeView.setText(String.valueOf(mCurrentLocation.getLongitude()));
             accuracy.setText(String.valueOf(mCurrentLocation.getAccuracy()));
-            inclination.setText(String.format(Locale.US, "Incl. %.2f°", mGeomagneticField.getDeclination()));
+            inclinationView.setText(String.format(Locale.US, "Incl. %.2f°", mGeomagneticField.getDeclination()));
 
 
             //mLastUpdateTimeTextView.setText(String.format(Locale.ENGLISH, "%s: %s", mLastUpdateTimeLabel, mLastUpdateTime));
@@ -351,11 +452,11 @@ public class GetPelengActivity extends AppCompatActivity {
 
                 mCurrentLocation = locationResult.getLastLocation();
                 mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-                mGeomagneticField = new GeomagneticField(
+                /*mGeomagneticField = new GeomagneticField(
                         (float)mCurrentLocation.getLatitude(),
                         (float)mCurrentLocation.getLongitude(),
                         (float)mCurrentLocation.getAltitude(),
-                        new Date().getTime());
+                        new Date().getTime()); */
                 updateLocationUI();
             }
         };
@@ -547,6 +648,19 @@ public class GetPelengActivity extends AppCompatActivity {
         // stopped state. Doing so helps battery performance and is especially
         // recommended in applications that request frequent location updates.
         stopLocationUpdates();
+    }
+
+    public void toggleUpdatesHandler (View view) {
+        if (mToggleButton.isChecked()){
+            if (!mRequestingLocationUpdates) {
+                mRequestingLocationUpdates = true;
+                setButtonsEnabledState();
+                startLocationUpdates();
+            }
+        }
+        else if (!mToggleButton.isChecked()){
+            stopLocationUpdates();
+        }
     }
 
 }
