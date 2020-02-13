@@ -4,12 +4,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.Manifest;
 
 import wildfire.volunteers.smokegator.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +29,11 @@ import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
     public static Context getContextOfApplication(){
         return contextOfApplication;
     }
+
+    private static final int RC_SIGN_IN = 123;
+
+    TextView status_text_view;
+    ImageButton sync_image_button;
+    private boolean syncing;
+    AuthUI auth;
 
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
@@ -73,41 +94,68 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        contextOfApplication = getApplicationContext();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        ImageButton list_image_button = findViewById(R.id.listImageButton);
+        list_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), GetPelengActivity.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PelengListActivity.class);
                 startActivity(intent);
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-           //     mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             }
         });
-
-
-
-        FloatingActionButton fab_peleng_list = findViewById(R.id.fab_peleng_list);
-        fab_peleng_list.setOnClickListener(new View.OnClickListener() {
+        ImageButton peleng_image_button = findViewById(R.id.pelengImageButton);
+        peleng_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PelengListActivity.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), GetPelengActivity.class);
                 startActivity(intent);
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                //     mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             }
         });
+        ImageButton settings_image_button = findViewById(R.id.settingsImageButton);
+        settings_image_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+        ImageButton ar_image_button = findViewById(R.id.ARImageButton);
+        ar_image_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ARPelengatorActivity.class);
+                startActivity(intent);
+            }
+        });
+        sync_image_button = findViewById(R.id.syncImageButton);
+        sync_image_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                syncToggle();
+            }
+        });
+        status_text_view = findViewById(R.id.statusTextView);
+
+        // AuthUI auth = AuthUI.getInstance();
+
+        /* FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            statusTextView.setText("Auth on");
+        } else {
+            statusTextView.setText("Auth off");
+        }*/
 
 
-            contextOfApplication = getApplicationContext();
+
+        updateUI();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -137,6 +185,47 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+
+    }
+
+    private void syncToggle(){
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) { // user logged in
+            AuthUI.getInstance()
+                    .signOut(this)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        public void onComplete(@NonNull Task<Void> task) {
+                            startActivity(new Intent(MainActivity.this, MainActivity.class));
+                            finish();
+                            updateUI();
+                            Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+        }
+        else { // user not logged in
+            startActivityForResult(
+                    // Get an instance of AuthUI based on the default app
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(Arrays.asList(
+                                    new AuthUI.IdpConfig.GoogleBuilder().build()
+                            ))
+                            .build(),
+                    RC_SIGN_IN);
+            //updateUI();
+            //Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void updateUI() {
+        //update auth status indicator
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+            status_text_view.setText("Auth on");
+        else
+            status_text_view.setText("Auth off");
+
 
     }
 
