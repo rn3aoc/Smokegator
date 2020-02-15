@@ -20,7 +20,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0.8"
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -57,48 +56,47 @@
         android:id="@+id/syncImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:alpha="0.8"
-        android:backgroundTint="@color/black_overlay"
+        android:alpha="0.4"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/include2"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
+        app:srcCompat="@drawable/ic_autorenew_24px" />
 
     <ImageButton
         android:id="@+id/listImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:alpha="0.8"
-        app:layout_constraintBottom_toTopOf="@+id/pelengImageButton"
+        android:alpha="0.4"
+        app:layout_constraintBottom_toTopOf="@+id/ARImageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:srcCompat="@drawable/ic_reorder_24px" />
 
     <ImageButton
         android:id="@+id/pelengImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:alpha="0.8"
+        android:alpha="0.4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_compass" />
+        app:srcCompat="@drawable/ic_explore_24px" />
 
     <ImageButton
         android:id="@+id/settingsImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:alpha="0.8"
+        android:alpha="0.4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:srcCompat="@android:drawable/ic_menu_preferences" />
+        app:srcCompat="@drawable/ic_settings_24px" />
 
     <ImageButton
         android:id="@+id/ARImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:alpha="0.8"
-        app:layout_constraintBottom_toTopOf="@+id/listImageButton"
+        android:alpha="0.4"
+        app:layout_constraintBottom_toTopOf="@+id/pelengImageButton"
         app:layout_constraintEnd_toEndOf="@+id/include2"
-        app:srcCompat="@android:drawable/ic_menu_view" />
+        app:srcCompat="@drawable/ic_camera_24px" />
 
     <TextView
         android:id="@+id/statusTextView"
@@ -108,5 +106,14 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/include2"
         app:layout_constraintTop_toBottomOf="@+id/syncImageButton" />
+
+    <ImageButton
+        android:id="@+id/groupImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.4"
+        app:layout_constraintEnd_toEndOf="@+id/include2"
+        app:layout_constraintTop_toBottomOf="@+id/settingsImageButton"
+        app:srcCompat="@drawable/ic_group_24px" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

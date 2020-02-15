@@ -14,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.GroupActivity"
+            android:label="@string/title_activity_group"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wildfire.volunteers.smokegator.MainActivity" />
+        </activity>
+        <activity
             android:name=".ARPelengatorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_arpelengator"

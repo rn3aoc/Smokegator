@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.Manifest;
 
 import wildfire.volunteers.smokegator.R;
+import wildfire.volunteers.smokegator.ui.GroupActivity;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.common.SignInButton;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView status_text_view;
     ImageButton sync_image_button;
+    ImageButton group_image_button;
     private boolean syncing;
     AuthUI auth;
 
@@ -129,6 +131,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ARPelengatorActivity.class);
+                startActivity(intent);
+            }
+        });
+        group_image_button = findViewById(R.id.groupImageButton);
+        group_image_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), GroupActivity.class);
                 startActivity(intent);
             }
         });
