@@ -1,4 +1,4 @@
-package wildfire.volunteers.smokegator.ui.ui.home;
+package wildfire.volunteers.smokegator.ui.ui.group;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +14,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import wildfire.volunteers.smokegator.R;
 
-public class HomeFragment extends Fragment {
+public class GroupFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private GroupViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+                ViewModelProviders.of(this).get(GroupViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_group, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override

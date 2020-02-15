@@ -231,10 +231,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI() {
         //update auth status indicator
-        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
             status_text_view.setText("Auth on");
-        else
+            sync_image_button.setBackgroundColor(Color.GREEN);}
+        else {
             status_text_view.setText("Auth off");
+            sync_image_button.setBackgroundColor(Color.RED);}
 
 
     }

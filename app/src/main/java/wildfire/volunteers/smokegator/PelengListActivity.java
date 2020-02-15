@@ -1,13 +1,18 @@
 package wildfire.volunteers.smokegator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import wildfire.volunteers.smokegator.R;
 
@@ -22,6 +27,8 @@ public class PelengListActivity extends AppCompatActivity {
 
     private PelengListAdapter mAdapter;
     private PelengListViewModel pelengListViewModel;
+
+    FloatingActionButton get_peleng_button;
 
 
     @Override
@@ -44,6 +51,15 @@ public class PelengListActivity extends AppCompatActivity {
 
 
         initRecyclerView();
+
+        get_peleng_button = findViewById(R.id.getPelengActionButton);
+        get_peleng_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), GetPelengActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
